@@ -38,6 +38,7 @@ const getStylesBasedInVariant = ({
     color: theme.colors.base.white,
     backgroundColor: theme.colors.branding['yellow-medium'],
     fontSize: theme.fontSizes.button.g,
+    width: '100%',
   }
 }
 

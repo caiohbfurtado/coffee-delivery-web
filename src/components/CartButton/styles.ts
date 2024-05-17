@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-export const CartButtonContainer = styled.button`
+export const CartButtonContainer = styled(Link)`
   border: none;
   outline: none;
   position: relative;
@@ -8,6 +9,9 @@ export const CartButtonContainer = styled.button`
   width: 2.375rem;
   height: 2.375rem;
   transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   ${({ theme }) => css`
     background-color: ${theme.colors.branding['yellow-light']};

@@ -1,6 +1,6 @@
 import { CartCardContainer, CartCardContent, PriceText } from './styles'
 
-import expressoPng from '../../assets/photos/expresso.png'
+import expressoPng from '../../assets/photos/expresso-tradicional.png'
 import { InputNumber } from '../InputNumber'
 import { Button } from '../Button'
 import { Trash } from 'phosphor-react'

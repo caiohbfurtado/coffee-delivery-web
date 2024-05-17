@@ -1,12 +1,12 @@
 import { ShoppingCart } from 'phosphor-react'
 import { CartButtonContainer, NumberOfItemsNotification } from './styles'
-import { ButtonHTMLAttributes } from 'react'
+import { AnchorHTMLAttributes } from 'react'
 
-type Buttonprops = ButtonHTMLAttributes<HTMLButtonElement>
+type Buttonprops = AnchorHTMLAttributes<HTMLAnchorElement>
 
 export function CartButton({ ...rest }: Buttonprops) {
   return (
-    <CartButtonContainer {...rest}>
+    <CartButtonContainer to="/carrinho" {...rest}>
       <ShoppingCart weight="fill" size={22} />
 
       <NumberOfItemsNotification>3</NumberOfItemsNotification>

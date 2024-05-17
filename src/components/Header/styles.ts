@@ -5,7 +5,9 @@ export const HeaderContainer = styled.header`
   height: 6.5rem;
   background-color: ${({ theme }) => theme.colors.base.background};
   position: fixed;
+  top: 0;
   display: flex;
+  z-index: 999;
 `
 
 export const CityInfo = styled.div`

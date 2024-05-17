@@ -4,13 +4,16 @@ import { CartButton } from '../CartButton'
 import { LogoSVG } from '../svgs/LogoSVG'
 import { MapPin } from 'phosphor-react'
 import { Container } from '../Container'
+import { Link } from 'react-router-dom'
 
 export function Header() {
   return (
     <HeaderContainer>
       <Container>
         <Content>
-          <LogoSVG />
+          <Link to="/">
+            <LogoSVG />
+          </Link>
 
           <CartInfo>
             <CityInfo>

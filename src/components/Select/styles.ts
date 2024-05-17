@@ -25,6 +25,7 @@ export const SelectTitle = styled.label<SelectContainerProps>`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  text-align: center;
   line-height: 160%;
   flex: 1;
   padding: 1rem;
