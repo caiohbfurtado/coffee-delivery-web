@@ -26,5 +26,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.fontFamily.text};
     font-weight: 400;
     font-size: 1rem;
+    line-height: 1.3;
   }
 `

@@ -2,12 +2,10 @@ import styled, { css } from 'styled-components'
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  max-width: 70rem;
+  height: 6.5rem;
+  background-color: ${({ theme }) => theme.colors.base.background};
+  position: fixed;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 0;
-  margin: 0 auto;
 `
 
 export const CityInfo = styled.div`
@@ -34,4 +32,11 @@ export const CityInfo = styled.div`
 export const CartInfo = styled.div`
   display: flex;
   gap: 0.75rem;
+`
+
+export const Content = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
 `

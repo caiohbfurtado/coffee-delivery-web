@@ -1,3 +1,14 @@
+import { HomeContainer } from './styles'
+
+import { Hero } from './components/Hero'
+import { CoffeesList } from './components/CoffeesList'
+
 export function Home() {
-  return <h1>Home</h1>
+  return (
+    <HomeContainer>
+      <Hero />
+
+      <CoffeesList />
+    </HomeContainer>
+  )
 }

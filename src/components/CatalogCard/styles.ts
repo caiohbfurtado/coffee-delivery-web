@@ -89,3 +89,8 @@ export const ActionsContainer = styled.div`
   display: flex;
   gap: 0.5rem;
 `
+
+export const BadgesContainer = styled.div`
+  display: flex;
+  gap: 0.25rem;
+`

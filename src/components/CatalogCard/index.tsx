@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { ShoppingCart } from 'phosphor-react'
 import {
   ActionsContainer,
   Badge,
+  BadgesContainer,
   CatalogCardContainer,
   CatalogCardContent,
   CatalogCardFooter,
@@ -12,27 +14,31 @@ import {
 import { InputNumber } from '../InputNumber'
 import { Button } from '../Button'
 
-type CatalogCardProps = {
+export type TypesOfCoffee =
+  | 'Tradicional'
+  | 'Especial'
+  | 'Com Leite'
+  | 'Gelado'
+  | 'Alcoólico'
+
+type CoffeeProps = {
+  id: number
   image: string
-  type: 'tradicional'
-  title: string
+  types: TypesOfCoffee[]
+  name: string
   description: string
   price: number
-  quantity: number
-  onAdd: (value: number) => void
-  onSub: (value: number) => void
 }
 
-export function CatalogCard({
-  description,
-  image,
-  price,
-  quantity,
-  title,
-  type,
-  onAdd,
-  onSub,
-}: CatalogCardProps) {
+type CatalogCardProps = {
+  coffee: CoffeeProps
+  // onAdd: (value: number) => void
+  // onSub: (value: number) => void
+  // quantity: number
+}
+
+export function CatalogCard({ coffee }: CatalogCardProps) {
+  const { description, image, name, price, types } = coffee
   const priceFormatted = price
     .toLocaleString('pt-br', {
       style: 'currency',
@@ -43,13 +49,17 @@ export function CatalogCard({
   return (
     <CatalogCardContainer>
       <CatalogCardHeader>
-        <img src={image} alt={title} />
+        <img src={image} alt={name} />
 
-        <Badge>{type}</Badge>
+        <BadgesContainer>
+          {types.map((typeOfCoffee) => (
+            <Badge key={typeOfCoffee}>{typeOfCoffee}</Badge>
+          ))}
+        </BadgesContainer>
       </CatalogCardHeader>
 
       <CatalogCardContent>
-        <h2>{title}</h2>
+        <h2>{name}</h2>
 
         <p>{description}</p>
       </CatalogCardContent>
@@ -60,7 +70,7 @@ export function CatalogCard({
         </ValueText>
 
         <ActionsContainer>
-          <InputNumber value={quantity} onAdd={onAdd} onSub={onSub} />
+          <InputNumber value={0} onAdd={() => { }} onSub={() => { }} />
           <Button variant="icon" icon={ShoppingCart} iconWeight="fill" />
         </ActionsContainer>
       </CatalogCardFooter>

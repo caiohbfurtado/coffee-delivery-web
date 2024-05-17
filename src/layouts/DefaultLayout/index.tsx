@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom'
-import { LayoutContainer } from './styles'
 import { Header } from '../../components/Header'
 
 export function DefaultLayout() {
   return (
-    <LayoutContainer>
+    <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
       <Header />
       <Outlet />
-    </LayoutContainer>
+    </div>
   )
 }
