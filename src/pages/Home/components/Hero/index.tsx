@@ -15,7 +15,7 @@ const bullets = [
   },
   {
     icon: Package,
-    text: 'Embalagem mantém o café intacto',
+    text: 'Mantém o café intacto',
     color: defaultTheme.colors.base.text,
   },
   {

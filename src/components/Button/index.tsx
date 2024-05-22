@@ -23,10 +23,11 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & ({
   iconWeight?: IconWeight
 })
 
-export function Button({ title, variant = 'primary', icon: Icon, iconWeight }: ButtonProps) {
+export function Button({ title, variant = 'primary', icon: Icon, iconWeight, ...rest }: ButtonProps) {
   const { colors } = useTheme()
+
   return (
-    <ButtonContainer variant={variant}>
+    <ButtonContainer variant={variant} {...rest}>
       {
         variant !== 'primary' && Icon && (
           <IconContext.Provider value={{

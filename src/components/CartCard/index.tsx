@@ -1,31 +1,51 @@
-import { CartCardContainer, CartCardContent, PriceText } from './styles'
+import { useContext } from 'react'
+import { Trash } from 'phosphor-react'
 
-import expressoPng from '../../assets/photos/expresso-tradicional.png'
 import { InputNumber } from '../InputNumber'
 import { Button } from '../Button'
-import { Trash } from 'phosphor-react'
-import { useState } from 'react'
 
-export function CartCard() {
-  const [quantity, setQuantity] = useState(1)
+import { CartCardContainer, CartCardContent, PriceText } from './styles'
+import { getPriceFormatted } from '../../utils/getPriceFormatted'
+import { CartContext, CoffeeInCart } from '../../contexts/CartContexts'
+
+type CartCardProps = {
+  coffee: CoffeeInCart
+}
+
+export function CartCard({ coffee }: CartCardProps) {
+  const { addItemToCart, subItemToCart, removeCoffeeToCart } =
+    useContext(CartContext)
+
+  const priceFormatted = getPriceFormatted(coffee.price)
+
   return (
     <CartCardContainer>
-      <img src={expressoPng} alt="Café expresso" />
+      <img src={coffee.image} alt="Café expresso" />
 
       <CartCardContent>
-        <span>Expresso Tradicional</span>
+        <span>{coffee.name}</span>
 
         <div>
           <InputNumber
-            value={quantity}
-            onAdd={setQuantity}
-            onSub={setQuantity}
+            value={coffee.quantity}
+            onAdd={() => addItemToCart(coffee.id)}
+            onSub={() => subItemToCart(coffee.id)}
           />
-          <Button variant="secondary" icon={Trash} title="remover" />
+          <Button
+            variant="secondary"
+            type="button"
+            icon={Trash}
+            title="remover"
+            onClick={() => {
+              console.log('entrou')
+
+              removeCoffeeToCart(coffee.id)
+            }}
+          />
         </div>
       </CartCardContent>
 
-      <PriceText>R$ 9,90</PriceText>
+      <PriceText>{priceFormatted}</PriceText>
     </CartCardContainer>
   )
 }

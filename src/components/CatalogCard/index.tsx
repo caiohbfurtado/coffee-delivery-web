@@ -13,6 +13,10 @@ import {
 
 import { InputNumber } from '../InputNumber'
 import { Button } from '../Button'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartContexts'
+import { getPriceFormatted } from '../../utils/getPriceFormatted'
+import { useNavigate } from 'react-router-dom'
 
 export type TypesOfCoffee =
   | 'Tradicional'
@@ -32,19 +36,17 @@ type CoffeeProps = {
 
 type CatalogCardProps = {
   coffee: CoffeeProps
-  // onAdd: (value: number) => void
-  // onSub: (value: number) => void
-  // quantity: number
 }
 
 export function CatalogCard({ coffee }: CatalogCardProps) {
+  const navigate = useNavigate()
+
   const { description, image, name, price, types } = coffee
-  const priceFormatted = price
-    .toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    })
-    .replace('R$', '')
+  const { addItemToCart, cart, subItemToCart } = useContext(CartContext)
+
+  const hasItemInCart = cart.find(currentCoffee => currentCoffee.id === coffee.id)
+
+  const priceFormatted = getPriceFormatted(price).replace('R$', '')
 
   return (
     <CatalogCardContainer>
@@ -70,8 +72,8 @@ export function CatalogCard({ coffee }: CatalogCardProps) {
         </ValueText>
 
         <ActionsContainer>
-          <InputNumber value={0} onAdd={() => { }} onSub={() => { }} />
-          <Button variant="icon" icon={ShoppingCart} iconWeight="fill" />
+          <InputNumber acceptZero value={hasItemInCart ? hasItemInCart.quantity : 0} onAdd={() => addItemToCart(coffee.id)} onSub={() => subItemToCart(coffee.id)} />
+          <Button variant="icon" icon={ShoppingCart} iconWeight="fill" onClick={() => navigate('/carrinho')} />
         </ActionsContainer>
       </CatalogCardFooter>
     </CatalogCardContainer>

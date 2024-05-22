@@ -26,3 +26,24 @@ export const SectionCartContainer = styled.div<SectionCartContainerProps>`
   display: flex;
   flex-direction: column;
 `
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  margin-top: 9rem;
+  font-weight: bold;
+
+  ${({ theme }) => css`
+    color: ${theme.colors.base.subtitle};
+    font-family: ${theme.fontFamily.title};
+    font-size: ${theme.fontSizes.title.s};
+
+    a {
+      color: ${theme.colors.branding['purple-medium']};
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        color: ${theme.colors.branding['purple-dark']};
+      }
+    }
+  `}
+`

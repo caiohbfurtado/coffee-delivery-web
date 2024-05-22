@@ -7,20 +7,24 @@ import {
 
 type InputNumberProps = {
   value: number
+  acceptZero?: boolean
   onAdd: (value: number) => void
   onSub: (value: number) => void
 }
 
-export function InputNumber({ value, onAdd, onSub }: InputNumberProps) {
-  const isMinimum = value <= 1
+export function InputNumber({
+  value,
+  onAdd,
+  onSub,
+  acceptZero = false,
+}: InputNumberProps) {
+  const isMinimum = acceptZero ? value <= 0 : value <= 1
   function handleAddValue() {
     onAdd(value + 1)
   }
 
   function handleSubValue() {
-    if (!isMinimum) {
-      onSub(value - 1)
-    }
+    onSub(value - 1)
   }
 
   return (

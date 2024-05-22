@@ -14,7 +14,7 @@ import arabePNG from '../assets/photos/arabe.png'
 import irlandesPNG from '../assets/photos/irlandes.png'
 import { TypesOfCoffee } from '../components/CatalogCard'
 
-type CoffeeDTO = {
+export type Coffee = {
   id: number
   image: string
   types: TypesOfCoffee[]
@@ -23,7 +23,7 @@ type CoffeeDTO = {
   price: number
 }
 
-export const coffeesList: CoffeeDTO[] = [
+export const coffeesList: Coffee[] = [
   {
     id: 1,
     name: 'Expresso Tradicional',
