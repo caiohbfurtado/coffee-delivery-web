@@ -3,19 +3,19 @@ import styled, { StyledObject, css } from 'styled-components'
 import { ThemeType } from '../../@types/styles'
 
 interface ButtonContainerProps {
-  variant: 'primary' | 'secondary' | 'icon'
+  $variant: 'primary' | 'secondary' | 'icon'
 }
 
 interface ThemedButtonStyledProps {
   theme: ThemeType
-  variant: 'primary' | 'secondary' | 'icon'
+  $variant: 'primary' | 'secondary' | 'icon'
 }
 
 const getStylesBasedInVariant = ({
-  variant,
+  $variant,
   theme,
 }: ThemedButtonStyledProps): StyledObject => {
-  if (variant === 'secondary') {
+  if ($variant === 'secondary') {
     return {
       padding: '0.375rem 0.5rem',
       color: theme.colors.base.text,
@@ -25,7 +25,7 @@ const getStylesBasedInVariant = ({
     }
   }
 
-  if (variant === 'icon') {
+  if ($variant === 'icon') {
     return {
       padding: '0.5rem',
       color: theme.colors.base.white,
@@ -55,22 +55,28 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   align-items: center;
   gap: 0.25rem;
 
-  ${({ theme, variant }) => css`
+  ${({ theme, $variant }) => css`
     &:focus {
       box-shadow: 0 0 0 2px
-        ${variant === 'primary'
+        ${$variant === 'primary'
       ? theme.colors.branding['yellow-dark']
-      : variant === 'secondary'
+      : $variant === 'secondary'
         ? theme.colors.base.text
         : theme.colors.branding['purple-light']};
     }
 
-    &:hover {
-      background-color: ${variant === 'primary'
+    &:hover:not(:disabled) {
+      background-color: ${$variant === 'primary'
       ? theme.colors.branding['yellow-dark']
-      : variant === 'secondary'
+      : $variant === 'secondary'
         ? theme.colors.base.hover
-        : theme.colors.branding['purple-medium']};;
+        : theme.colors.branding['purple-medium']};
+    }
+
+    &:disabled {
+      background-color: ${theme.colors.branding['yellow-light']};
+      color: ${theme.colors.branding['yellow-medium']};
+      cursor: not-allowed;
     }
   `}
 

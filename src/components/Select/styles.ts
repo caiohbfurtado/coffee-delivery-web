@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styled, { css } from 'styled-components'
 
 interface SelectContainerProps {
@@ -46,7 +47,9 @@ export const SelectTitle = styled.label<SelectContainerProps>`
     color: ${theme.colors.base.text};
 
     &:hover {
-      background-color: ${theme.colors.base.hover};
+      background-color: ${checked
+      ? theme.colors.branding['purple-light']
+      : theme.colors.base.hover};
     }
 
     svg {

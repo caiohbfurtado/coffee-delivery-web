@@ -4,7 +4,7 @@ type SectionCartContainerProps = {
   width?: number
 }
 
-export const CartContainer = styled.div`
+export const CartContainer = styled.form`
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 2rem;
@@ -44,6 +44,22 @@ export const EmptyContainer = styled.div`
       &:hover {
         color: ${theme.colors.branding['purple-dark']};
       }
+    }
+  `}
+`
+
+export const ErrorContainer = styled.div`
+  height: 2rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${({ theme }) => css`
+    p {
+      font-size: ${theme.fontSizes.text.s};
+      color: red;
+      font-weight: bold;
     }
   `}
 `

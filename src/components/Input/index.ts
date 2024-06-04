@@ -1,15 +1,21 @@
 import styled, { css } from 'styled-components'
 
-export const InputText = styled.input`
+type InputTextProps = {
+  $required?: string
+}
+
+export const Input = styled.input<InputTextProps>`
   width: 100%;
   height: 2.625rem;
   border-radius: 4px;
   padding: 0.75rem;
   border: none;
 
-  ${({ theme }) => css`
+  ${({ theme, $required }) => css`
     background-color: ${theme.colors.base.input};
     color: ${theme.colors.base.text};
+
+    border: 1px solid ${$required ? 'red' : 'transparent'};
 
     &::placeholder {
       color: ${theme.colors.base.label};

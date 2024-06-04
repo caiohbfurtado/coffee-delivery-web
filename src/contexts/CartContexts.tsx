@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useState } from 'react'
 import { Coffee, coffeesList } from '../data/coffeeslist'
+import { OrderFormData } from '../pages/Cart'
 
 export type CoffeeInCart = Coffee & {
   quantity: number
@@ -11,6 +12,9 @@ type CartContextType = {
   addItemToCart: (id: number) => void
   subItemToCart: (id: number) => void
   removeCoffeeToCart: (id: number) => void
+  orderInfo: OrderFormData
+  addOrderInfo: (orderInfo: OrderFormData) => void
+  finishTheOrder: () => void
 }
 
 interface CartContextProviderProps {
@@ -21,6 +25,7 @@ export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cart, setCart] = useState<CoffeeInCart[]>([])
+  const [orderInfo, setOrderInfo] = useState<OrderFormData>({} as OrderFormData)
 
   function addItemToCart(id: number) {
     const hasInCart = cart.find((coffee) => coffee.id === id)
@@ -72,9 +77,17 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCart((prevState) => prevState.filter((coffee) => coffee.id !== id))
   }
 
+  function addOrderInfo(newOrderInfo: OrderFormData) {
+    setOrderInfo(newOrderInfo)
+  }
+
   const totalCart = cart.reduce((accumulator, current) => {
     return current.price * current.quantity + accumulator
   }, 0)
+
+  function finishTheOrder() {
+    setCart([])
+  }
 
   return (
     <CartContext.Provider
@@ -84,6 +97,9 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         subItemToCart,
         removeCoffeeToCart,
         totalCart,
+        orderInfo,
+        addOrderInfo,
+        finishTheOrder,
       }}
     >
       {children}

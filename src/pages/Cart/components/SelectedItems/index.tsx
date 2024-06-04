@@ -15,9 +15,13 @@ import {
 import { useContext } from 'react'
 import { CartContext } from '../../../../contexts/CartContexts'
 import { getPriceFormatted } from '../../../../utils/getPriceFormatted'
+import { useFormContext } from 'react-hook-form'
 
 export function SelectedItems() {
   const { cart, totalCart } = useContext(CartContext)
+  const {
+    formState: { isValid },
+  } = useFormContext()
 
   const deliveryPrice = 3.5
   const priceFormattedTotalCart = getPriceFormatted(totalCart)
@@ -55,7 +59,12 @@ export function SelectedItems() {
         </TotalInfo>
       </TotalContainer>
 
-      <Button variant="primary" title="confirmar pedido" />
+      <Button
+        disabled={!isValid}
+        variant="primary"
+        title="confirmar pedido"
+        type="submit"
+      />
     </SelectedItemsContainer>
   )
 }

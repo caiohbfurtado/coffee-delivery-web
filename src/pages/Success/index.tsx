@@ -10,8 +10,20 @@ import {
   SuccessContainer,
 } from './styles'
 import { useTheme } from 'styled-components'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartContexts'
+
+const PAYMENT_INFO = {
+  credit_card: 'Cartão de Crédito',
+  debit_card: 'Cartão de Débito',
+  money: 'Dinheiro',
+}
 
 export function Success() {
+  const {
+    orderInfo: { street, number, neighborhood, city, state, payment },
+  } = useContext(CartContext)
+
   const {
     colors: { branding },
   } = useTheme()
@@ -33,8 +45,12 @@ export function Success() {
                   <MapPin size={16} weight="fill" />
                 </IconContainer>
                 <p>
-                  Entrega em <span>Rua João Daniel Martinelli, 102</span> <br />
-                  Farrapos - Porto Alegre, RS
+                  Entrega em{' '}
+                  <span>
+                    {street}, {number}
+                  </span>{' '}
+                  <br />
+                  {neighborhood} - {city}, {state}
                 </p>
               </OrderInfo>
 
@@ -54,7 +70,7 @@ export function Success() {
                 </IconContainer>
                 <p>
                   Pagamento na entrega <br />
-                  <span>Cartão de Crédito</span>
+                  <span>{PAYMENT_INFO[payment]}</span>
                 </p>
               </OrderInfo>
             </div>

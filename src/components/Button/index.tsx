@@ -27,7 +27,7 @@ export function Button({ title, variant = 'primary', icon: Icon, iconWeight, ...
   const { colors } = useTheme()
 
   return (
-    <ButtonContainer variant={variant} {...rest}>
+    <ButtonContainer $variant={variant} {...rest}>
       {
         variant !== 'primary' && Icon && (
           <IconContext.Provider value={{

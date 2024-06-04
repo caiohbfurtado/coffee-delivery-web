@@ -17,7 +17,7 @@ export function Select({
 }: SelectProps) {
   return (
     <SelectContainer>
-      <RadioInput {...rest} id={id} type="checkbox" />
+      <RadioInput {...rest} id={id} type="radio" />
 
       <SelectTitle htmlFor={id} checked={!!checked}>
         <Icon size={16} style={{ width: 16, height: 16 }} />

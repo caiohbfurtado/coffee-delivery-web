@@ -7,7 +7,6 @@ import {
 } from 'phosphor-react'
 import { useTheme } from 'styled-components'
 
-import { Input } from '../../../../components/Input'
 import { Select } from '../../../../components/Select'
 
 import {
@@ -19,11 +18,23 @@ import {
   HeaderTitle,
   BoxContent,
 } from './styles'
+import { Controller, useFormContext } from 'react-hook-form'
+import { Input } from '../../../../components/Input'
+import { OrderFormData } from '../..'
 
 export function Form() {
   const {
     colors: { branding },
   } = useTheme()
+
+  const {
+    formState: { errors },
+    register,
+    control,
+    watch,
+  } = useFormContext<OrderFormData>()
+
+  const payment = watch('payment')
 
   return (
     <FormContainer>
@@ -41,17 +52,53 @@ export function Form() {
         </BoxHeader>
 
         <BoxContent>
-          <Input placeholder="CEP" />
-          <Input placeholder="Rua" />
+          <Input
+            $required={errors.zipCode?.message}
+            placeholder="CEP"
+            {...register('zipCode')}
+          />
+          <Input
+            $required={errors.street?.message}
+            placeholder="Rua"
+            {...register('street')}
+          />
 
           <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <Input placeholder="Número" style={{ width: '12.5rem' }} />
-            <Input placeholder="Complemento" />
+            <Input
+              $required={errors.number?.message}
+              placeholder="Número"
+              style={{ width: '12.5rem' }}
+              id="number"
+              {...register('number')}
+            />
+            <Input
+              $required={errors.additionalInfo?.message}
+              placeholder="Complemento"
+              id="additionalInfo"
+              {...register('additionalInfo')}
+            />
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <Input placeholder="Bairro" style={{ width: '12.5rem' }} />
-            <Input placeholder="Cidade" />
-            <Input placeholder="UF" style={{ width: '3.75rem' }} />
+            <Input
+              $required={errors.neighborhood?.message}
+              placeholder="Bairro"
+              style={{ width: '12.5rem' }}
+              id="neighborhood"
+              {...register('neighborhood')}
+            />
+            <Input
+              $required={errors.city?.message}
+              placeholder="Cidade"
+              id="city"
+              {...register('city')}
+            />
+            <Input
+              $required={errors.state?.message}
+              placeholder="UF"
+              style={{ width: '3.75rem' }}
+              id="state"
+              {...register('state')}
+            />
           </div>
         </BoxContent>
       </Box>
@@ -70,13 +117,41 @@ export function Form() {
         </BoxHeader>
 
         <BoxContent direction="row">
-          <Select
-            label="Cartão de Crédito"
-            icon={CreditCard}
-            id="credit-card"
+          <Controller
+            control={control}
+            name="payment"
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  label="Cartão de Crédito"
+                  icon={CreditCard}
+                  name="payment"
+                  id="credit_card"
+                  value="credit_card"
+                  checked={payment === 'credit_card'}
+                />
+                <Select
+                  {...field}
+                  label="Cartão de Débito"
+                  icon={Bank}
+                  name="payment"
+                  id="debit_card"
+                  value="debit_card"
+                  checked={payment === 'debit_card'}
+                />
+                <Select
+                  {...field}
+                  label="Dinheiro"
+                  icon={Money}
+                  name="payment"
+                  id="money"
+                  value="money"
+                  checked={payment === 'money'}
+                />
+              </>
+            )}
           />
-          <Select label="Cartão de Débito" icon={Bank} id="debit-card" />
-          <Select label="Dinheiro" icon={Money} id="money" />
         </BoxContent>
       </Box>
     </FormContainer>
