@@ -10,8 +10,9 @@ import {
   SuccessContainer,
 } from './styles'
 import { useTheme } from 'styled-components'
-import { useContext } from 'react'
-import { CartContext } from '../../contexts/CartContexts'
+import { Location, useLocation, useNavigate } from 'react-router-dom'
+import { OrderFormData } from '../Cart'
+import { useEffect } from 'react'
 
 const PAYMENT_INFO = {
   credit_card: 'Cartão de Crédito',
@@ -19,10 +20,20 @@ const PAYMENT_INFO = {
   money: 'Dinheiro',
 }
 
+type PaymentDetailsProps = {
+  paymentDetails: OrderFormData
+}
+
 export function Success() {
-  const {
-    orderInfo: { street, number, neighborhood, city, state, payment },
-  } = useContext(CartContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { state }: Location<PaymentDetailsProps> = location
+
+  useEffect(() => {
+    if (!state) {
+      return navigate('/')
+    }
+  }, [state, navigate])
 
   const {
     colors: { branding },
@@ -47,10 +58,12 @@ export function Success() {
                 <p>
                   Entrega em{' '}
                   <span>
-                    {street}, {number}
+                    {state?.paymentDetails.street},{' '}
+                    {state?.paymentDetails.number}
                   </span>{' '}
                   <br />
-                  {neighborhood} - {city}, {state}
+                  {state?.paymentDetails.neighborhood} -{' '}
+                  {state?.paymentDetails.city}, {state?.paymentDetails.state}
                 </p>
               </OrderInfo>
 
@@ -70,7 +83,7 @@ export function Success() {
                 </IconContainer>
                 <p>
                   Pagamento na entrega <br />
-                  <span>{PAYMENT_INFO[payment]}</span>
+                  <span>{PAYMENT_INFO[state?.paymentDetails.payment]}</span>
                 </p>
               </OrderInfo>
             </div>

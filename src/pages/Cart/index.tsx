@@ -54,7 +54,7 @@ const orderFormValidationSchema = zod.object({
 export type OrderFormData = zod.infer<typeof orderFormValidationSchema>
 
 export function Cart() {
-  const { cart, addOrderInfo, finishTheOrder } = useContext(CartContext)
+  const { cart, finishTheOrder } = useContext(CartContext)
   const navigate = useNavigate()
 
   const orderForm = useForm<OrderFormData>({
@@ -76,12 +76,9 @@ export function Cart() {
   const hasItemsInCart = cart.length > 0
 
   function handleCreateNewOrder(data: OrderFormData) {
-    addOrderInfo(data)
-
+    navigate('/sucesso', { state: { paymentDetails: data } })
     reset()
     finishTheOrder()
-
-    navigate('/sucesso')
   }
 
   return (
