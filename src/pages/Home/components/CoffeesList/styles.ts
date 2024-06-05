@@ -22,4 +22,5 @@ export const CoffeesListContainer = styled.div`
   row-gap: 2.5rem;
   column-gap: 2rem;
   margin-top: 3.375rem;
+  justify-content: space-evenly;
 `

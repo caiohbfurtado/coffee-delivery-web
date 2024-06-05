@@ -1,5 +1,12 @@
-import { ReactNode, createContext, useState } from 'react'
-import { Coffee, coffeesList } from '../data/coffeeslist'
+import { ReactNode, createContext, useEffect, useReducer } from 'react'
+import { Coffee } from '../data/coffeeslist'
+import { cartReducer } from '../reducers/cart/reducer'
+import {
+  addCoffee,
+  removeAllCoffees,
+  removeCoffee,
+  subCoffee,
+} from '../reducers/cart/actions'
 
 export type CoffeeInCart = Coffee & {
   quantity: number
@@ -21,56 +28,42 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cart, setCart] = useState<CoffeeInCart[]>([])
-
-  function addItemToCart(id: number) {
-    const hasInCart = cart.find((coffee) => coffee.id === id)
-
-    if (hasInCart) {
-      const newCart = cart.map((coffee) =>
-        coffee.id === id
-          ? { ...coffee, quantity: coffee.quantity + 1 }
-          : coffee,
+  const [cartState, dispatch] = useReducer(
+    cartReducer,
+    {
+      cart: [],
+    },
+    (initialState) => {
+      const storedStateAsJSON = localStorage.getItem(
+        '@coffee-delivery:cart-state-1.0.0',
       )
 
-      setCart(newCart)
-    } else {
-      const newCoffeeInfo: CoffeeInCart = {
-        ...coffeesList.filter((coffee) => coffee.id === id)[0],
-        quantity: 1,
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON)
       }
 
-      setCart((prevState) => [...prevState, newCoffeeInfo])
-    }
+      return initialState
+    },
+  )
+
+  const { cart } = cartState
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(cartState)
+
+    localStorage.setItem('@coffee-delivery:cart-state-1.0.0', stateJSON)
+  }, [cartState])
+
+  function addItemToCart(id: number) {
+    dispatch(addCoffee(id))
   }
 
   function subItemToCart(id: number) {
-    const hasInCart = cart.find((coffee) => coffee.id === id)
-
-    if (hasInCart && hasInCart.quantity >= 2) {
-      const newCart = cart.map((coffee) =>
-        coffee.id === id
-          ? { ...coffee, quantity: coffee.quantity - 1 }
-          : coffee,
-      )
-
-      setCart(newCart)
-    } else if (hasInCart && hasInCart.quantity === 1) {
-      const newCart = cart.filter((coffee) => coffee.id !== id)
-
-      setCart(newCart)
-    } else {
-      const newCoffeeInfo: CoffeeInCart = {
-        ...coffeesList.filter((coffee) => coffee.id === id)[0],
-        quantity: 1,
-      }
-
-      setCart((prevState) => [...prevState, newCoffeeInfo])
-    }
+    dispatch(subCoffee(id))
   }
 
   function removeCoffeeToCart(id: number) {
-    setCart((prevState) => prevState.filter((coffee) => coffee.id !== id))
+    dispatch(removeCoffee(id))
   }
 
   const totalCart = cart.reduce((accumulator, current) => {
@@ -78,7 +71,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }, 0)
 
   function finishTheOrder() {
-    setCart([])
+    dispatch(removeAllCoffees())
   }
 
   return (
